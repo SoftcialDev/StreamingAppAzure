@@ -1,0 +1,1 @@
+﻿// Header.tsx component placeholder

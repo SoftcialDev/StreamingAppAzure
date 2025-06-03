@@ -1,0 +1,1 @@
+﻿// useWebSocket.ts hook placeholder

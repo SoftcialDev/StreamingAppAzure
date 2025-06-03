@@ -1,0 +1,1 @@
+﻿// Sidebar.tsx component placeholder

@@ -1,0 +1,137 @@
+# -----------------------------------
+# 1) Terraform
+# -----------------------------------
+# Ignore the .terraform directory (provider binaries and module cache)
+.terraform/
+*.tfstate
+*.tfstate.*
+*.tfvars
+*.tfvars.*
+crash.log
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
+.terraform.tfstate.lock.info
+
+# -----------------------------------
+# 2) Node.js / React / TypeScript / Tailwind
+# -----------------------------------
+# Ignore Node.js dependencies
+node_modules/
+
+# Ignore build output folders (e.g., Vite, Create React App, Next.js)
+build/
+dist/
+.next/   # if using Next.js
+out/     # generic output directory (e.g., Vite)
+
+# Ignore npm/yarn/pnpm log files
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Ignore environment variable files
+.env
+.env.local
+.env.*.local
+
+# Ignore TypeScript incremental compilation cache
+*.tsbuildinfo
+
+# -----------------------------------
+# 3) Python (including TensorFlow)
+# -----------------------------------
+# Byte-compiled / cache files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environment directories
+venv/
+env/
+.venv/
+
+# Jupyter Notebook checkpoints
+.ipynb_checkpoints/
+
+# Distribution / packaging build folders
+build/
+dist/
+pip-log.txt
+*.egg-info/
+.eggs/
+
+# PyInstaller spec files
+*.spec
+
+# Test and coverage folders
+.coverage
+htmlcov/
+.tox/
+.pytest_cache/
+
+# MyPy cache
+.mypy_cache/
+.dmypy.json
+.dmypy.json.log
+
+# Pyre cache
+.pyre/
+
+# Pytype cache
+.pytype/
+
+# TensorFlow / Keras artifacts
+# Checkpoints created during model training
+checkpoint
+ckpt-*
+
+# Saved models
+saved_model.pb
+saved_model.pbtxt
+
+# TensorBoard log files
+logs/
+events.out.tfevents.*
+
+# Keras HDF5 model files
+*.h5
+*.hdf5
+
+# TensorFlow Lite files
+*.tflite
+
+# -----------------------------------
+# 4) System and Editor Files
+# -----------------------------------
+# macOS Finder metadata
+.DS_Store
+
+# Windows thumbnail cache
+Thumbs.db
+
+# VSCode workspace settings
+.vscode/
+
+# JetBrains IDE settings (WebStorm, PyCharm, etc.)
+.idea/
+
+# Sublime Text project/workspace files
+*.sublime-project
+*.sublime-workspace
+
+# -----------------------------------
+# 5) Other Common Artifacts
+# -----------------------------------
+# General log files
+*.log
+
+# Temporary files
+*.tmp
+*.swp
+*.bak
+
+# Dist folder (if used for something else)
+.Dist/

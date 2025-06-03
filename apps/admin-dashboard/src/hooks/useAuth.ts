@@ -1,0 +1,1 @@
+﻿// useAuth.ts hook placeholder

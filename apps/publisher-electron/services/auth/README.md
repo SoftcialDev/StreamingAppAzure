@@ -1,0 +1,3 @@
+﻿# auth
+
+Service documentation placeholder

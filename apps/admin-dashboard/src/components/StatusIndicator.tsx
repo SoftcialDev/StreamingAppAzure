@@ -1,0 +1,1 @@
+﻿// StatusIndicator.tsx component placeholder

@@ -1,0 +1,1 @@
+﻿// FilterBar.tsx component placeholder

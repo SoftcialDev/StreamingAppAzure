@@ -1,0 +1,3 @@
+﻿# storage
+
+Service documentation placeholder

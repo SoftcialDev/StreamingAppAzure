@@ -1,0 +1,1 @@
+﻿// storage service logic placeholder
