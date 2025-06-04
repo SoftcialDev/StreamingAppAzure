@@ -1,0 +1,27 @@
+{
+  "name": "@streamingappazure/tf-api",
+  "version": "1.0.0",
+  "private": true,
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc -b",
+    "start": "node dist/index.js",
+    "dev": "tsc -b --watch",
+    "test": "jest"
+  },
+  "dependencies": {
+    "express": "^4.19.0",
+    "@tensorflow/tfjs-node": "^4.16.0",
+    "@azure/msal-node": "^2.14.2"
+    
+  },
+  "devDependencies": {
+    "typescript": "^5.4.0",
+    "jest": "^29.0.0",
+    "ts-jest": "^29.0.0",
+    "@types/jest": "^29.0.0",
+    "@types/node": "^20.0.0",
+    "@types/express": "^4.17.0"
+  }
+}

@@ -1,9 +1,9 @@
-# 1) Crear el Resource Group (si aún no existe)
+# 1) Create the Resource Group (if it does not already exist)
 az group create `
   --name RG-TerraformState `
   --location eastus2
 
-# 2) Crear la Storage Account con un nombre único, p.ej. tfstatecollette123
+# 2) Create the Storage Account with a unique name, e.g., tfstatecollette123
 az storage account create `
   --resource-group RG-TerraformState `
   --name tfstatecollette123 `
@@ -13,13 +13,13 @@ az storage account create `
   --access-tier Hot `
   --https-only true
 
-# 3) Obtener la clave primaria
+# 3) Retrieve the primary key
 $key = az storage account keys list `
   --resource-group RG-TerraformState `
   --account-name tfstatecollette123 `
   --query "[0].value" -o tsv
 
-# 4) Crear el contenedor "terraform-state"
+# 4) Create the "terraform-state" container
 az storage container create `
   --name terraform-state `
   --account-name tfstatecollette123 `

@@ -9,7 +9,7 @@ output "admin_webapp_name" {
 }
 
 output "admin_webapp_default_hostname" {
-  description = "Default hostname of the Admin Dashboard Web App"
+  description = "Default hostname (URL) of the Admin Dashboard Web App"
   value       = azurerm_linux_web_app.admin.default_hostname
 }
 
@@ -24,6 +24,6 @@ output "tf_api_webapp_name" {
 }
 
 output "tf_api_webapp_default_hostname" {
-  description = "Default hostname of the TensorFlow API Web App"
+  description = "Default hostname (URL) of the TensorFlow API Web App"
   value       = azurerm_linux_web_app.tf_api.default_hostname
 }

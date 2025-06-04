@@ -1,4 +1,4 @@
-# File: terraform/providers.tf
+# --- providers.tf ---
 
 terraform {
   required_version = ">= 1.5.0"
@@ -34,13 +34,17 @@ terraform {
 
 provider "azurerm" {
   features {}  # Required by azurerm >= v2
-  # Optionally lock to a specific subscription and tenant:
-  # subscription_id = var.subscription_id
-  # tenant_id       = var.tenant_id
+
+  # Keep the same subscription_id and tenant_id variables
+  subscription_id            = var.subscription_id
+  tenant_id                  = var.tenant_id
+
+  # Preserve skip_provider_registration
+  skip_provider_registration = true
 }
 
 provider "azuread" {
-  # By default, uses the same Azure CLI or Service Principal credentials as AzureRM.
+  # By default, AzureAD will use the same credentials as AzureRM
   tenant_id = var.tenant_id
 }
 

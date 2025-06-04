@@ -1,23 +1,26 @@
 # ----------------------------------------------------------------------------
-# Create App Service Plan (Linux, Basic_B1)
+# Create App Service Plan (Linux)
+#
+# Cost optimizations:
+#  - Use Basic tier (B1) instead of Standard (S1).
+#  - Single instance (capacity = 1).
 # ----------------------------------------------------------------------------
-
 resource "azurerm_app_service_plan" "asp" {
   name                = "${var.name_prefix}-${var.environment}-asp"
   location            = var.location
   resource_group_name = var.resource_group_name
   kind                = "Linux"
-  reserved            = true  # Required for Linux
+  reserved            = true  # Required for Linux workers
 
   sku {
-    tier     = "Basic"
-    size     = "B1"
-    capacity = 1
+    tier     = var.plan_tier   
+    size     = var.plan_size   
+    capacity = var.plan_capacity 
   }
 
   tags = {
     Environment = var.environment
-    Project     = "EmployeeMonitoring"
+    Role        = "AppServicePlan"
     CreatedBy   = "terraform"
   }
 }

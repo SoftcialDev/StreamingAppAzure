@@ -1,1 +1,0 @@
-﻿// MSAL configuration placeholder

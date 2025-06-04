@@ -23,3 +23,8 @@ output "container_id" {
   description = "Name of the SQL container for metadata"
   value       = azurerm_cosmosdb_sql_container.metadata_container.name
 }
+
+
+output "container_name" {
+  value = azurerm_cosmosdb_sql_container.metadata_container.name
+}

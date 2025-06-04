@@ -1,7 +1,5 @@
-
-
 variable "name_prefix" {
-  description = "Lower-case prefix used in naming Azure resources (e.g., 'collettehealthprod')"
+  description = "Lowercase prefix used in naming Azure resources (e.g., 'collettehealthprod')"
   type        = string
 }
 
@@ -34,3 +32,10 @@ variable "keyvault_uri" {
   description = "URI of the Key Vault (needed for granting Key Vault Reader)"
   type        = string
 }
+
+
+variable "keyvault_id" {
+  description = "The resource ID of the Azure Key Vault."
+  type        = string
+}
+

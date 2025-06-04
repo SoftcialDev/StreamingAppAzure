@@ -1,5 +1,5 @@
 variable "name_prefix" {
-  description = "Lowercase prefix used in naming all resources (e.g., 'collettehealthprod')"
+  description = "Lowercase prefix used in naming all App Service resources (e.g., 'collettehealthprod')"
   type        = string
 }
 
@@ -9,7 +9,7 @@ variable "environment" {
 }
 
 variable "resource_group_name" {
-  description = "Name of the existing Resource Group for App Service"
+  description = "Name of the existing Resource Group where App Service resources will be created"
   type        = string
 }
 
@@ -25,6 +25,24 @@ variable "enable_slot" {
 }
 
 variable "tf_api_image" {
-  description = "Full path to the TensorFlow API container image in ACR (e.g., '<acr>.azurecr.io/tf-api:latest')"
+  description = "Fully qualified path to the TensorFlow API container image in ACR (e.g., '<myacr>.azurecr.io/tf-api:latest')"
   type        = string
+}
+
+variable "plan_tier" {
+  description = "App Service Plan tier (Basic vs. Standard). Use 'Basic' for cost savings."
+  type        = string
+  default     = "Basic"
+}
+
+variable "plan_size" {
+  description = "App Service Plan size (B1 vs. S1, etc.). Use 'B1' for the Basic tier."
+  type        = string
+  default     = "B1"
+}
+
+variable "plan_capacity" {
+  description = "Instance count for the App Service Plan. Lower capacity = lower cost."
+  type        = number
+  default     = 1
 }

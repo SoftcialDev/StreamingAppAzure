@@ -1,5 +1,3 @@
-# File: terraform/modules/acr/variables.tf
-
 variable "name_prefix" {
   description = "Lowercase prefix used in naming the ACR (e.g., 'collettehealthprod')"
   type        = string
@@ -26,6 +24,6 @@ variable "sku" {
 }
 
 variable "akskubelet_identity_id" {
-  description = "The ID of the AKS kubelet identity"
+  description = "Managed Identity object ID of the AKS kubelet, for role assignment"
   type        = string
 }

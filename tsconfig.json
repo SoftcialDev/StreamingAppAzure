@@ -1,0 +1,33 @@
+{
+  "compilerOptions": {
+    "composite": true,
+    "declaration": true,
+    "declarationMap": true,
+    "sourceMap": true,
+    "incremental": true,
+    "baseUrl": ".",
+    "paths": {
+      "@streamingappazure/shared-json/*": ["libs/shared-json/src/*"],
+      "@streamingappazure/shared-auth/*": ["libs/shared-auth/src/*"],
+    },
+    "moduleResolution": "node",
+    "module": "commonjs",
+    "target": "ES2020",
+    "esModuleInterop": true,
+    "resolveJsonModule": true,
+    "strict": true,
+    "skipLibCheck": true
+  },
+  "include": [
+    "apps",
+    "libs"
+  ],
+  "references": [
+    { "path": "libs/shared-auth" },
+    { "path": "libs/shared-json" },
+    //{ "path": "apps/admin-dashboard" },
+    //{ "path": "apps/publisher-electron" },
+   // { "path": "apps/tf-api" },
+    { "path": "apps/app-functions" }
+  ]
+}

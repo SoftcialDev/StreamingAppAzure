@@ -1,0 +1,16 @@
+{
+  "name": "@streamingappazure/shared-json",
+  "version": "1.0.0",
+  "description": "Shared JSON schemas and generated TypeScript types for the StreamingAppAzure project.",
+  "private": true,
+  "main": "index.ts",
+  "scripts": {
+    "generate-types": "json2ts -i schemas/ -o types/"
+  },
+  "devDependencies": {
+    "json-schema-to-typescript": "^15.0.4"
+  },
+    "compilerOptions": {
+    "composite": true
+  }
+}

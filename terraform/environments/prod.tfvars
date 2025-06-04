@@ -1,28 +1,69 @@
-# File: terraform/environments/prod.tfvars
+# ------------------------------------------------------------------
+# 1. Global / Common settings
+# ------------------------------------------------------------------
 
-name_prefix             = "collettehealthprod"
-location                = "eastus2"
-environment             = "prod"
-resource_group_name     = "collettehealthprod-rg"
+name_prefix             = "collettehealthprod"           # Lowercase prefix for naming all resources
+location                = "eastus2"                       # Azure region
+environment             = "prod"                          # Deployment environment tag
+resource_group_name     = "collettehealthprod-rg"         # Name of existing Resource Group
 subscription_id         = "af90c465-cc8e-46d8-a0eb-ee471b4313a3"
-tenant_id               = "c6f9ef6d-6027-416d-91f9-72ea35c9dac5"
-enable_slot             = true
+tenant_id               = "a080ad22-43aa-4696-b40b-9b68b702c9f3"
 
-servicebus_sku          = "Standard"
-cosmos_consistency      = "Session"
-acr_sku                 = "Premium"
+# ------------------------------------------------------------------
+# 2. App Service (no staging slot = cheaper)
+# ------------------------------------------------------------------
 
-aks_system_vm_size      = "Standard_B2s"
-aks_spot_vm_size        = "Standard_D4as_v5"
-
+enable_slot             = false                           # “true” only if you want a staging slot
 tf_api_image            = "collettehealthprodacr.azurecr.io/tf-api:prod-latest"
 livekit_image           = "collettehealthprodacr.azurecr.io/livekit:prod-latest"
 
-keyvault_sku            = "premium"
+# ------------------------------------------------------------------
+# 3. Service Bus (Basic = cheapest)
+# ------------------------------------------------------------------
 
-initial_admin_principals = [
-  "22222222-3333-4444-5555-666666666666",
-  "77777777-8888-9999-0000-aaaaaaaaaaaa"
-]
+servicebus_sku          = "Standard"                         # “Basic” is lowest-cost tier
 
-pipeline_sp_object_id    = "bbbbbbbb-cccc-dddd-eeee-ffffffffffff"
+# ------------------------------------------------------------------
+# 4. Cosmos DB (Serverless, Session consistency)
+# ------------------------------------------------------------------
+
+cosmos_consistency      = "Session"                       # “Session” consistency
+
+# ------------------------------------------------------------------
+# 5. Azure Container Registry (Basic = cheapest)
+# ------------------------------------------------------------------
+
+acr_sku                 = "Basic"
+
+# ------------------------------------------------------------------
+# 6. AKS (Single B2s node pool, no spot pool by default)
+# ------------------------------------------------------------------
+
+aks_system_vm_size      = "Standard_B2s"
+aks_spot_vm_size        = "Standard_D4as_v5"
+aks_spot_max_count      = 1                               # set >0 to enable spot nodes
+
+# ------------------------------------------------------------------
+# 7. Key Vault (Standard = cheapest)
+# ------------------------------------------------------------------
+
+keyvault_sku            = "Standard"
+
+# ------------------------------------------------------------------
+# 8. CI/CD pipeline Service Principal
+#     (Terraform will create it automatically; leave blank here)
+# ------------------------------------------------------------------
+
+pipeline_sp_object_id   = ""                               # Terraform’s main.tf creates this SP
+
+# ------------------------------------------------------------------
+# 9. Storage (enable static website if needed)
+# ------------------------------------------------------------------
+
+enable_static_website   = false
+
+enable_kv_access_for_pipeline = true
+
+
+create_redirect_uri    = true
+create_role_assignment = true

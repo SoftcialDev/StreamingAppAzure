@@ -1,5 +1,9 @@
 # ----------------------------------------------------------------------------
-# 1. Create Cosmos DB Account in Serverless mode (SQL API)
+# 1. Create a Serverless Cosmos DB Account (SQL API)
+#
+# Cost optimizations:
+#  - "EnableServerless" ensures you pay per operation rather than fixed throughput.
+#  - We only define a single geo_location (no multi-region) to avoid extra charges.
 # ----------------------------------------------------------------------------
 resource "azurerm_cosmosdb_account" "cosmos" {
   name                = "${var.name_prefix}-${var.environment}-cosmos"
@@ -8,7 +12,7 @@ resource "azurerm_cosmosdb_account" "cosmos" {
   offer_type          = "Standard"
   kind                = "GlobalDocumentDB"
 
-  # Serverless capacity mode
+  # Enable serverless mode
   capabilities {
     name = "EnableServerless"
   }
@@ -17,6 +21,7 @@ resource "azurerm_cosmosdb_account" "cosmos" {
     consistency_level = var.consistency_level
   }
 
+  # Single-region, no geo-replication
   geo_location {
     location          = var.location
     failover_priority = 0
@@ -30,18 +35,16 @@ resource "azurerm_cosmosdb_account" "cosmos" {
 }
 
 # ----------------------------------------------------------------------------
-# 2. Create a SQL Database for Recording Metadata
+# 2. Create a SQL Database (no throughput block => serverless auto-scaling)
 # ----------------------------------------------------------------------------
 resource "azurerm_cosmosdb_sql_database" "metadata_db" {
   name                = "RecordingMetadataDB"
   resource_group_name = var.resource_group_name
   account_name        = azurerm_cosmosdb_account.cosmos.name
-
-  throughput = 400
 }
 
 # ----------------------------------------------------------------------------
-# 3. Create a SQL Container for Recording Metadata
+# 3. Create a SQL Container (no manual throughput => serverless auto-scale)
 # ----------------------------------------------------------------------------
 resource "azurerm_cosmosdb_sql_container" "metadata_container" {
   name                = "Recordings"
@@ -50,7 +53,6 @@ resource "azurerm_cosmosdb_sql_container" "metadata_container" {
   database_name       = azurerm_cosmosdb_sql_database.metadata_db.name
 
   partition_key_paths = ["/user"]
-  throughput         = 400
 
   indexing_policy {
     indexing_mode = "consistent"

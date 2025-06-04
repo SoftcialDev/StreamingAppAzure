@@ -1,5 +1,3 @@
-# File: modules/storage/variables.tf
-
 variable "name_prefix" {
   description = "Lowercase prefix used in naming Storage resources (e.g., 'collettehealthprod')"
   type        = string

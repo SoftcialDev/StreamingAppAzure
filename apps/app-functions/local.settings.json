@@ -1,0 +1,13 @@
+{
+  "IsEncrypted": false,
+  "Values": {
+    "AzureWebJobsStorage": "",
+    "FUNCTIONS_WORKER_RUNTIME": "node",
+    "SERVICEBUS_NAMESPACE_ID": "",
+    "COSMOSDB_ACCOUNT_ID": "",
+    "KEYVAULT_URI": "",
+    "LIVEKIT_API_KEY_SECRET_NAME": "livekit-api-key",
+    "LIVEKIT_API_SECRET_NAME": "livekit-api-secret",
+    "LIVEKIT_URL": ""
+  }
+}

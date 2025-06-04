@@ -13,6 +13,7 @@ override.tf.json
 *_override.tf
 *_override.tf.json
 .terraform.tfstate.lock.info
+diagram.md
 
 # -----------------------------------
 # 2) Node.js / React / TypeScript / Tailwind

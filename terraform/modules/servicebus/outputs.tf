@@ -1,4 +1,3 @@
-# File: terraform/modules/servicebus/outputs.tf
 
 output "namespace_id" {
   description = "Resource ID of the Service Bus Namespace"

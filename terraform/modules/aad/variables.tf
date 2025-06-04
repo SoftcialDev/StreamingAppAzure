@@ -1,21 +1,15 @@
-# File: terraform/modules/aad/variables.tf
-
 variable "name_prefix" {
-  description = "Lower-case prefix used in naming AAD resources (e.g., 'collettehealthprod')"
+  description = "Lowercase prefix used in naming AAD resources (e.g., 'collettehealthprod')"
   type        = string
 }
 
 variable "environment" {
-  description = "Deployment environment (e.g., 'prod')"
+  description = "Deployment environment identifier (e.g., 'prod')"
   type        = string
 }
 
-variable "initial_admins" {
-  description = "List of Azure AD Object IDs for users who should be in the 'Admins' group"
-  type        = list(string)
-}
-
-variable "tenant_id" {
-  description = "Azure AD Tenant ID (used by AzureAD provider)"
-  type        = string
+variable "create_redirect_uri" {
+  type        = bool
+  description = "Whether to create a redirect URI for the AAD application"
+  default     = true
 }

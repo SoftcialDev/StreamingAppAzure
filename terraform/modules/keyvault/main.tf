@@ -1,17 +1,37 @@
-# ----------------------------------------------------------------------------
-# 1. Create the Key Vault instance (soft-delete enabled, purge protection optional)
-# ----------------------------------------------------------------------------
+# modules/keyvault/main.tf
+# ------------------------------------------------------------------------------
+# This module creates:
+#   1. An Azure Key Vault (standard or premium)
+#   2. An access policy granting the current Terraform user/SP full secret permissions
+#
+# The conditional logic for a pipeline SP is removed and moved into the root module.
+# ------------------------------------------------------------------------------
+
+terraform {
+  required_providers {
+    azurerm = {
+      source  = "hashicorp/azurerm"
+      version = ">= 3.0.0"
+    }
+    azuread = {
+      source  = "hashicorp/azuread"
+      version = ">= 2.48.0"
+    }
+  }
+}
+
+# Inherit providers (azurerm & azuread) from the root module
+
+data "azuread_client_config" "current" {}
+
+# 1. Create the Key Vault (standard or premium, minimal ACLs)
 resource "azurerm_key_vault" "vault" {
-  name                        = "${var.name_prefix}-${var.environment}-kv"
+  name                        = "${substr(var.name_prefix, 0, 12)}${substr(var.environment, 0, 1)}kv"
   location                    = var.location
   resource_group_name         = var.resource_group_name
-  tenant_id                   = data.azurerm_client_config.current.tenant_id
+  tenant_id                   = data.azuread_client_config.current.tenant_id
   sku_name                    = var.sku == "premium" ? "premium" : "standard"
-  # soft_delete_enabled is enabled by default and cannot be disabled
-  purge_protection_enabled    = false         # Consider enabling in stricter environments
-
-  # Allow trusted Microsoft services (e.g., Functions) to bypass network restrictions
-  # network_acls { ... } can be configured if you need VNet restrictions
+  purge_protection_enabled    = false
 
   tags = {
     Environment = var.environment
@@ -20,15 +40,12 @@ resource "azurerm_key_vault" "vault" {
   }
 }
 
-# ----------------------------------------------------------------------------
-# 2. Grant secret permissions to initial principals (users/service principals)
-# ----------------------------------------------------------------------------
-resource "azurerm_key_vault_access_policy" "initial_admins" {
-  for_each = toset(var.initial_principals)
-
+# 2. Grant the current Terraform user/SP full secret permissions:
+#    (Get, List, Set, Delete)
+resource "azurerm_key_vault_access_policy" "current_user" {
   key_vault_id = azurerm_key_vault.vault.id
-  tenant_id    = data.azurerm_client_config.current.tenant_id
-  object_id    = each.value
+  tenant_id    = data.azuread_client_config.current.tenant_id
+  object_id    = data.azuread_client_config.current.object_id
 
   secret_permissions = [
     "Get",
@@ -37,25 +54,3 @@ resource "azurerm_key_vault_access_policy" "initial_admins" {
     "Delete"
   ]
 }
-
-
-# ----------------------------------------------------------------------------
-# 3. Grant secret permissions to pipeline service principal (if specified)
-# ----------------------------------------------------------------------------
-
-resource "azurerm_key_vault_access_policy" "pipeline_sp" {
-  count        = var.pipeline_sp_object_id != "" ? 1 : 0
-  key_vault_id = azurerm_key_vault.vault.id
-  tenant_id    = data.azurerm_client_config.current.tenant_id
-  object_id    = var.pipeline_sp_object_id
-
-  secret_permissions = [
-    "Get",
-    "List"
-  ]
-}
-
-# ----------------------------------------------------------------------------
-# Data source to retrieve current tenant ID for access policies
-# ----------------------------------------------------------------------------
-data "azurerm_client_config" "current" {}

@@ -1,0 +1,9 @@
+{
+  "extends": "../../tsconfig.json",
+  "compilerOptions": {
+    "outDir": "dist",
+    "rootDir": "."
+  },
+  "include": ["*.ts", "shared/**/*.ts", "enqueueRecordingCommand/**/*.ts", "getLiveKitToken/**/*.ts", "postRecordingMetadata/**/*.ts"],
+  "exclude": ["node_modules", "dist"]
+}

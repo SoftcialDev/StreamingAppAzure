@@ -1,5 +1,5 @@
 variable "name_prefix" {
-  description = "Lower-case prefix used in naming Cosmos resources (e.g., 'collettehealthprod')"
+  description = "Lowercase prefix used in naming Cosmos resources (e.g., 'collettehealthprod')"
   type        = string
 }
 
